@@ -1,17 +1,14 @@
-// Reset
 *,
 *::before,
 *::after {
   box-sizing: border-box;
   margin: 0;
-  padding: 0;
-}
+  padding: 0; }
 
 body {
   font-family: Helvetica, Arial, sans-serif;
   background-color: #F7F7F7;
-  line-height: 1.5;
-}
+  line-height: 1.5; }
 
 h1,
 h2,
@@ -19,32 +16,25 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: normal;
-}
+  font-weight: normal; }
 
 ol,
 ul {
-  list-style: none;
-}
+  list-style: none; }
 
 a {
   text-decoration: none;
-  color: inherit;
-}
+  color: inherit; }
 
 button {
   padding: 10px 15px;
   border: none;
   color: white;
   border-radius: 4px;
-  transition: background-color 0.3s ease;
-
-  &:hover {
+  transition: background-color 0.3s ease; }
+  button:hover {
     cursor: pointer;
-    background-color: #45A049;
-  }
-}
+    background-color: #45A049; }
 
 textarea {
-  resize: vertical;
-}
+  resize: vertical; }
