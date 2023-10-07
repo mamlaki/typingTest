@@ -13,6 +13,7 @@ function loadNewPrompt() {
 }
 
 if (startBtn && typingArea) {
+  typingArea.classList.add('unfocused')
   loadNewPrompt()
 
   startBtn.addEventListener('click', () => {
@@ -41,6 +42,14 @@ if (startBtn && typingArea) {
   typingArea.addEventListener('click', () => {
     const caretPos = window.getSelection()?.anchorOffset || 0
     currentPosition = caretPos
+  })
+
+  typingArea.addEventListener('focus', () => {
+    typingArea?.classList.remove('unfocused')
+  })
+
+  typingArea.addEventListener('blur', () => {
+    typingArea?.classList.add('unfocused')
   })
 }
 

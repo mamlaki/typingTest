@@ -61,7 +61,12 @@ body {
 
 .typing-area {
   min-height: 150px;
-  outline: none; }
+  outline: none;
+  filter: none;
+  transition: filter 0.3s ease; }
+  .typing-area.unfocused {
+    filter: blur(1px);
+    transition: filter 0.3s ease; }
 
 .correct {
   color: green; }
