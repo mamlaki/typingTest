@@ -5,12 +5,18 @@ const sampleTexts: string[] = ['Sample text 1', 'Sample text 2', 'Sample text 3'
 let currentPosition: number = 0
 let currentPrompt: string = ''
 
+function loadNewPrompt() {
+  currentPrompt = sampleTexts[Math.floor(Math.random() * sampleTexts.length)]
+  typingArea!.innerHTML = currentPrompt.split('').map(char => `<span>${char}</span>`).join('')
+  currentPosition = 0
+  setCursorAtStart(typingArea!)
+}
+
 if (startBtn && typingArea) {
+  loadNewPrompt()
+
   startBtn.addEventListener('click', () => {
-    currentPrompt = sampleTexts[Math.floor(Math.random() * sampleTexts.length)]
-    typingArea.innerHTML = currentPrompt.split('').map(char => `<span>${char}</span>`).join('')
-    currentPosition = 0
-    setCursorAtStart(typingArea)
+    loadNewPrompt()
   })
 
   typingArea.addEventListener('keydown', (e) => {

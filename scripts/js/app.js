@@ -4,12 +4,16 @@ var startBtn = document.querySelector('.start-btn');
 var sampleTexts = ['Sample text 1', 'Sample text 2', 'Sample text 3'];
 var currentPosition = 0;
 var currentPrompt = '';
+function loadNewPrompt() {
+    currentPrompt = sampleTexts[Math.floor(Math.random() * sampleTexts.length)];
+    typingArea.innerHTML = currentPrompt.split('').map(function (char) { return "<span>".concat(char, "</span>"); }).join('');
+    currentPosition = 0;
+    setCursorAtStart(typingArea);
+}
 if (startBtn && typingArea) {
+    loadNewPrompt();
     startBtn.addEventListener('click', function () {
-        currentPrompt = sampleTexts[Math.floor(Math.random() * sampleTexts.length)];
-        typingArea.innerHTML = currentPrompt.split('').map(function (char) { return "<span>".concat(char, "</span>"); }).join('');
-        currentPosition = 0;
-        setCursorAtStart(typingArea);
+        loadNewPrompt();
     });
     typingArea.addEventListener('keydown', function (e) {
         e.preventDefault();
