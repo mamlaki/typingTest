@@ -34,13 +34,15 @@ if (startBtn && typingArea) {
         }
         setCursorAfterStyledChar(typingArea, currentPosition);
     });
-    typingArea.addEventListener('click', function () {
-        var _a;
-        var caretPos = ((_a = window.getSelection()) === null || _a === void 0 ? void 0 : _a.anchorOffset) || 0;
-        currentPosition = caretPos;
+    typingArea.addEventListener('click', function (e) {
+        // const caretPos = window.getSelection()?.anchorOffset || 0
+        // currentPosition = caretPos
+        e.preventDefault();
+        setCursorAfterStyledChar(typingArea, currentPosition);
     });
     typingArea.addEventListener('focus', function () {
         typingArea === null || typingArea === void 0 ? void 0 : typingArea.classList.remove('unfocused');
+        setCursorAfterStyledChar(typingArea, currentPosition);
     });
     typingArea.addEventListener('blur', function () {
         typingArea === null || typingArea === void 0 ? void 0 : typingArea.classList.add('unfocused');

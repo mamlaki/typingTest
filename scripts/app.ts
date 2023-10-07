@@ -39,13 +39,14 @@ if (startBtn && typingArea) {
     setCursorAfterStyledChar(typingArea, currentPosition)
   })
 
-  typingArea.addEventListener('click', () => {
-    const caretPos = window.getSelection()?.anchorOffset || 0
-    currentPosition = caretPos
+  typingArea.addEventListener('click', (e) => {
+    e.preventDefault()
+    setCursorAfterStyledChar(typingArea, currentPosition)
   })
 
   typingArea.addEventListener('focus', () => {
     typingArea?.classList.remove('unfocused')
+    setCursorAfterStyledChar(typingArea, currentPosition)
   })
 
   typingArea.addEventListener('blur', () => {
