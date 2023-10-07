@@ -8,33 +8,53 @@ let currentPrompt: string = ''
 if (startBtn && typingArea) {
   startBtn.addEventListener('click', () => {
     currentPrompt = sampleTexts[Math.floor(Math.random() * sampleTexts.length)]
-    typingArea.textContent = currentPrompt
+    typingArea.innerHTML = currentPrompt.split('').map(char => `<span>${char}</span>`).join('')
     currentPosition = 0
     setCursorAtStart(typingArea)
   })
 
-  typingArea.addEventListener('input', (e) => {
-    const plainText = typingArea.textContent ? typingArea.textContent.replace(/<[^>]*>/g, "") : ""
-    
-    if (plainText[currentPosition] === currentPrompt[currentPosition]) {
-      applyCharacterStyle('correct')
-    } else {
-      applyCharacterStyle('incorrect')
+  typingArea.addEventListener('keydown', (e) => {
+    e.preventDefault()
+
+    if (e.key === 'Backspace' && currentPosition > 0) {
+      currentPosition--
+      resetCharacterStyle(currentPosition)
+    } else if (e.key.length === 1 && currentPosition < currentPrompt.length) {
+      const charTyped = e.key
+      if (charTyped === currentPrompt[currentPosition]) {
+        applyCharacterStyle('correct')
+      } else {
+        applyCharacterStyle('incorrect')
+      }
+      currentPosition++
     }
 
-    currentPosition++
+    setCursorAfterStyledChar(typingArea, currentPosition)
+  })
+
+  typingArea.addEventListener('click', () => {
+    const caretPos = window.getSelection()?.anchorOffset || 0
+    currentPosition = caretPos
   })
 }
 
 function applyCharacterStyle(className: string) {
   if (typingArea) {
-    const charToStyle = currentPrompt[currentPosition]
-    const preText = currentPrompt.substring(0, currentPosition)
-    const postText = currentPrompt.substring(currentPosition + 1)
-    const styledChar = `<span class="${className}">${charToStyle}</span>`
-  
-    typingArea.innerHTML = preText + styledChar + postText
-    setCursorAfterStyledChar(typingArea, currentPosition)
+    const targetNode = typingArea.childNodes[currentPosition] as HTMLElement
+    if (targetNode) {
+      targetNode.className = className
+      setCursorAfterStyledChar(typingArea, currentPosition + 1)
+    }
+  }
+}
+
+function resetCharacterStyle(position: number) {
+  if (typingArea) {
+    const targetNode = typingArea.childNodes[position] as HTMLElement
+    if (targetNode) {
+      targetNode.classList.remove('correct', 'incorrect')
+      setCursorAfterStyledChar(typingArea, position)
+    }
   }
 }
 
@@ -52,12 +72,15 @@ function setCursorAfterStyledChar(element: HTMLElement, position: number) {
   const range = document.createRange()
   const sel = window.getSelection()
 
-  const styledSpan = element.querySelectorAll('span')[0]
+  const styledSpan = element.querySelectorAll('span')[position - 1]
 
   if (styledSpan) {
     range.setStartAfter(styledSpan)
-    range.collapse(true)
-    sel?.removeAllRanges()
-    sel?.addRange(range)
+  } else {
+    range.setStart(element.childNodes[0], position)
   }
+
+  range.collapse(true)
+  sel?.removeAllRanges()
+  sel?.addRange(range)
 }

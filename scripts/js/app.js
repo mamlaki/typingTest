@@ -7,29 +7,50 @@ var currentPrompt = '';
 if (startBtn && typingArea) {
     startBtn.addEventListener('click', function () {
         currentPrompt = sampleTexts[Math.floor(Math.random() * sampleTexts.length)];
-        typingArea.textContent = currentPrompt;
+        typingArea.innerHTML = currentPrompt.split('').map(function (char) { return "<span>".concat(char, "</span>"); }).join('');
         currentPosition = 0;
         setCursorAtStart(typingArea);
     });
-    typingArea.addEventListener('input', function (e) {
-        var plainText = typingArea.textContent ? typingArea.textContent.replace(/<[^>]*>/g, "") : "";
-        if (plainText[currentPosition] === currentPrompt[currentPosition]) {
-            applyCharacterStyle('correct');
+    typingArea.addEventListener('keydown', function (e) {
+        e.preventDefault();
+        if (e.key === 'Backspace' && currentPosition > 0) {
+            currentPosition--;
+            resetCharacterStyle(currentPosition);
         }
-        else {
-            applyCharacterStyle('incorrect');
+        else if (e.key.length === 1 && currentPosition < currentPrompt.length) {
+            var charTyped = e.key;
+            if (charTyped === currentPrompt[currentPosition]) {
+                applyCharacterStyle('correct');
+            }
+            else {
+                applyCharacterStyle('incorrect');
+            }
+            currentPosition++;
         }
-        currentPosition++;
+        setCursorAfterStyledChar(typingArea, currentPosition);
+    });
+    typingArea.addEventListener('click', function () {
+        var _a;
+        var caretPos = ((_a = window.getSelection()) === null || _a === void 0 ? void 0 : _a.anchorOffset) || 0;
+        currentPosition = caretPos;
     });
 }
 function applyCharacterStyle(className) {
     if (typingArea) {
-        var charToStyle = currentPrompt[currentPosition];
-        var preText = currentPrompt.substring(0, currentPosition);
-        var postText = currentPrompt.substring(currentPosition + 1);
-        var styledChar = "<span class=\"".concat(className, "\">").concat(charToStyle, "</span>");
-        typingArea.innerHTML = preText + styledChar + postText;
-        setCursorAfterStyledChar(typingArea, currentPosition);
+        var targetNode = typingArea.childNodes[currentPosition];
+        if (targetNode) {
+            targetNode.className = className;
+            setCursorAfterStyledChar(typingArea, currentPosition + 1);
+        }
+    }
+}
+function resetCharacterStyle(position) {
+    if (typingArea) {
+        var targetNode = typingArea.childNodes[position];
+        if (targetNode) {
+            targetNode.classList.remove('correct', 'incorrect');
+            setCursorAfterStyledChar(typingArea, position);
+        }
     }
 }
 function setCursorAtStart(element) {
@@ -44,12 +65,15 @@ function setCursorAtStart(element) {
 function setCursorAfterStyledChar(element, position) {
     var range = document.createRange();
     var sel = window.getSelection();
-    var styledSpan = element.querySelectorAll('span')[0];
+    var styledSpan = element.querySelectorAll('span')[position - 1];
     if (styledSpan) {
         range.setStartAfter(styledSpan);
-        range.collapse(true);
-        sel === null || sel === void 0 ? void 0 : sel.removeAllRanges();
-        sel === null || sel === void 0 ? void 0 : sel.addRange(range);
     }
+    else {
+        range.setStart(element.childNodes[0], position);
+    }
+    range.collapse(true);
+    sel === null || sel === void 0 ? void 0 : sel.removeAllRanges();
+    sel === null || sel === void 0 ? void 0 : sel.addRange(range);
 }
 //# sourceMappingURL=app.js.map
