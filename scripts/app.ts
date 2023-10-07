@@ -53,6 +53,13 @@ if (startBtn && typingArea) {
   })
 }
 
+const focusMessage = document.querySelector('.focus-message')
+if (focusMessage) {
+  focusMessage.addEventListener('click', () => {
+    typingArea?.focus()
+  })
+}
+
 function applyCharacterStyle(className: string) {
   if (typingArea) {
     const targetNode = typingArea.childNodes[currentPosition] as HTMLElement

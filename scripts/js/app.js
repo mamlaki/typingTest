@@ -46,6 +46,12 @@ if (startBtn && typingArea) {
         typingArea === null || typingArea === void 0 ? void 0 : typingArea.classList.add('unfocused');
     });
 }
+var focusMessage = document.querySelector('.focus-message');
+if (focusMessage) {
+    focusMessage.addEventListener('click', function () {
+        typingArea === null || typingArea === void 0 ? void 0 : typingArea.focus();
+    });
+}
 function applyCharacterStyle(className) {
     if (typingArea) {
         var targetNode = typingArea.childNodes[currentPosition];

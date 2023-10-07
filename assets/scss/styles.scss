@@ -21,6 +21,24 @@ body {
   border-radius: 5px;
   overflow: auto;
   padding: 10px;
+  position: relative;
+}
+
+.focus-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translateY(10px);
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition-delay: 0.5s;
+  pointer-events: none;
+  i {
+    margin-right: 10px;
+  }
 }
 
 .typing-area {
@@ -28,10 +46,24 @@ body {
   outline: none;
   filter: none;
   transition: filter 0.3s ease;
+  transition-delay: 0.5s;
   &.unfocused {
     filter: blur(1px);
-    transition: filter 0.3s ease;
   }
+}
+
+.typing-area:not(.unfocused) {
+  transition-delay: 0s;
+}
+
+.typing-area.unfocused + .focus-message {
+  opacity: 1;
+  transform: translate(-50%, -50%) translateY(0);
+  pointer-events: auto;
+}
+
+.typing-area:not(.unfocused) + .focus-message {
+  transition-delay: 0s;
 }
 
 .correct {
