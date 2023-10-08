@@ -13,6 +13,8 @@ function loadNewPrompt() {
 if (startBtn && typingArea) {
     typingArea.classList.add('unfocused');
     loadNewPrompt();
+    typingArea.focus();
+    typingArea.classList.remove('unfocused');
     startBtn.addEventListener('click', function () {
         loadNewPrompt();
     });
@@ -35,8 +37,6 @@ if (startBtn && typingArea) {
         setCursorAfterStyledChar(typingArea, currentPosition);
     });
     typingArea.addEventListener('click', function (e) {
-        // const caretPos = window.getSelection()?.anchorOffset || 0
-        // currentPosition = caretPos
         e.preventDefault();
         setCursorAfterStyledChar(typingArea, currentPosition);
     });

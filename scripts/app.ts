@@ -15,6 +15,8 @@ function loadNewPrompt() {
 if (startBtn && typingArea) {
   typingArea.classList.add('unfocused')
   loadNewPrompt()
+  typingArea.focus()
+  typingArea.classList.remove('unfocused')
 
   startBtn.addEventListener('click', () => {
     loadNewPrompt()
