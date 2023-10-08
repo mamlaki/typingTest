@@ -36,12 +36,12 @@ body {
   }
 
   .main-logo {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-weight: bold;
   }
 
   i {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     transition: transform 0.3s ease;
 
     &:hover {
@@ -109,6 +109,29 @@ body {
 
 .typing-area:not(.unfocused) + .focus-message {
   transition-delay: 0s;
+}
+
+.start-btn {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+
+  i {
+    font-size: 1.6rem;
+    color: #FFF;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  &:focus {
+    box-shadow: none;
+  }
 }
 
 .correct {

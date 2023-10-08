@@ -5,9 +5,13 @@
   margin: 0;
   padding: 0; }
 
+html {
+  font-size: 62.5%; }
+
 body {
   font-family: Helvetica, Arial, sans-serif;
   background-color: #F7F7F7;
+  font-size: 1.6rem;
   line-height: 1.5; }
 
 h1,
@@ -25,16 +29,6 @@ ul {
 a {
   text-decoration: none;
   color: inherit; }
-
-button {
-  padding: 10px 15px;
-  border: none;
-  color: white;
-  border-radius: 4px;
-  transition: background-color 0.3s ease; }
-  button:hover {
-    cursor: pointer;
-    background-color: #45A049; }
 
 textarea {
   resize: vertical; }
@@ -63,10 +57,10 @@ body {
     .header a:hover {
       text-decoration: none; }
   .header .main-logo {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-weight: bold; }
   .header i {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     transition: transform 0.3s ease; }
     .header i:hover {
       transform: scale(1.1); }
@@ -122,6 +116,22 @@ body {
 
 .typing-area:not(.unfocused) + .focus-message {
   transition-delay: 0s; }
+
+.start-btn {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0; }
+  .start-btn i {
+    font-size: 1.6rem;
+    color: #FFF;
+    transition: transform 0.3s ease; }
+    .start-btn i:hover {
+      transform: scale(1.1); }
+  .start-btn:focus {
+    box-shadow: none; }
 
 .correct {
   color: green; }
