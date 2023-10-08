@@ -43,6 +43,34 @@ body {
   background-color: #282C34;
   color: #FFF; }
 
+.header {
+  padding: 10px 5%; }
+  .header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+  .header ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    padding: 0; }
+    .header ul li {
+      margin: 0 10px; }
+  .header a {
+    text-decoration: none;
+    color: #FFF;
+    position: relative; }
+    .header a:hover {
+      text-decoration: none; }
+  .header .main-logo {
+    font-size: 1.5rem;
+    font-weight: bold; }
+  .header i {
+    font-size: 1.5rem;
+    transition: transform 0.3s ease; }
+    .header i:hover {
+      transform: scale(1.1); }
+
 .container {
   width: 80%;
   margin: 50px auto;
