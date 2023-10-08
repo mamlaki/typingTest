@@ -228,7 +228,7 @@ footer:not(.hidden),
   transition: opacity 0.3s ease-in-out; }
 
 .correct {
-  color: green; }
+  color: #496788; }
 
 .incorrect {
   color: red; }

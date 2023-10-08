@@ -131,7 +131,6 @@ body {
   left: 50%;
   transform: translate(-50%, -50%) translateY(10px);
   opacity: 0;
-  // background-color: rgba(255, 255, 255, 0.1);
   padding: 10px 20px;
   border-radius: 5px;
   transition: opacity 0.3s ease, transform 0.3s ease;
@@ -263,7 +262,7 @@ footer:not(.hidden),
 }
 
 .correct {
-  color: green;
+  color: #496788;
 }
 
 .incorrect {
