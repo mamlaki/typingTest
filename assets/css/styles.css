@@ -11,7 +11,7 @@ html {
 body {
   font-family: Helvetica, Arial, sans-serif;
   background-color: #F7F7F7;
-  font-size: 1.6rem;
+  font-size: clamp(1.6rem, 2vw, 2.4rem);
   line-height: 1.5; }
 
 h1,
@@ -57,10 +57,8 @@ body {
     .header a:hover {
       text-decoration: none; }
   .header .main-logo {
-    font-size: 1.6rem;
     font-weight: bold; }
   .header i {
-    font-size: 1.6rem;
     transition: transform 0.3s ease; }
     .header i:hover {
       transform: scale(1.1); }
@@ -125,7 +123,6 @@ body {
   padding: 0;
   margin: 0; }
   .start-btn i {
-    font-size: 1.6rem;
     color: #FFF;
     transition: transform 0.3s ease; }
     .start-btn i:hover {
