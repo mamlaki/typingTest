@@ -149,6 +149,11 @@ typingArea?.addEventListener('keydown', (e) => {
     hideUIElements()
     hasStartedTyping = true
   }
+
+  if (e.key === 'Tab') {
+    e.preventDefault()
+    startBtn?.focus()
+  }
 })
 
 document.addEventListener('mousemove', () => {

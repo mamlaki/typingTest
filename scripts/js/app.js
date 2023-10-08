@@ -127,6 +127,10 @@ typingArea === null || typingArea === void 0 ? void 0 : typingArea.addEventListe
         hideUIElements();
         hasStartedTyping = true;
     }
+    if (e.key === 'Tab') {
+        e.preventDefault();
+        startBtn === null || startBtn === void 0 ? void 0 : startBtn.focus();
+    }
 });
 document.addEventListener('mousemove', function () {
     if (hasStartedTyping) {

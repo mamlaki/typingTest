@@ -102,7 +102,7 @@ body {
     }
 
     a.active {
-      color: #d0d0d0;
+      color: #D0D0D0;
     }
 
     .time-selector i {
@@ -175,18 +175,29 @@ body {
   cursor: pointer;
   padding: 0;
   margin: 0;
+  position: relative;
+
+  &:focus:before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    right: -30px;
+    left: -30px;
+    bottom: -20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 3px solid rgba(255, 255, 255, 0.05);
+    border-radius: 9px;
+    z-index: -1;
+  }
 
   i {
+    font-size: 1.8rem;
     color: #FFF;
     transition: transform 0.3s ease;
 
     &:hover {
       transform: scale(1.1);
     }
-  }
-
-  &:focus {
-    box-shadow: none;
   }
 }
 
