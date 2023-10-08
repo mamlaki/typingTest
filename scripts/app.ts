@@ -109,3 +109,15 @@ function setCursorAfterStyledChar(element: HTMLElement, position: number) {
   sel?.removeAllRanges()
   sel?.addRange(range)
 }
+
+
+const timeSelections: NodeListOf<HTMLElement> = document.querySelectorAll('.time-selection')
+
+timeSelections.forEach(timeSelection => {
+  timeSelection.addEventListener('click', (e) => {
+    e.preventDefault()
+    
+    timeSelections.forEach(element => element.classList.remove('active'))
+    timeSelection.classList.add('active')
+  })
+})

@@ -95,4 +95,12 @@ function setCursorAfterStyledChar(element, position) {
     sel === null || sel === void 0 ? void 0 : sel.removeAllRanges();
     sel === null || sel === void 0 ? void 0 : sel.addRange(range);
 }
+var timeSelections = document.querySelectorAll('.time-selection');
+timeSelections.forEach(function (timeSelection) {
+    timeSelection.addEventListener('click', function (e) {
+        e.preventDefault();
+        timeSelections.forEach(function (element) { return element.classList.remove('active'); });
+        timeSelection.classList.add('active');
+    });
+});
 //# sourceMappingURL=app.js.map

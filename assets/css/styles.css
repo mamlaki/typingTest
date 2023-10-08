@@ -101,9 +101,11 @@ body {
       display: flex;
       align-items: center;
       cursor: pointer;
-      transition: filter 0.5s ease; }
+      transition: filter 0.3s ease, color 0.3s ease; }
       .toolbar .mode-section a:hover {
         filter: brightness(0.8); }
+      .toolbar .mode-section a:active {
+        color: #496788; }
     .toolbar .mode-section a.active {
       color: #d0d0d0; }
     .toolbar .mode-section .time-selector i {
