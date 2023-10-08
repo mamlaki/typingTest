@@ -96,6 +96,10 @@ body {
         filter: brightness(0.8);
       }
     }
+    
+    a.active {
+      color: #d0d0d0;
+    }
 
     .time-selector i {
       margin-right: 5px;

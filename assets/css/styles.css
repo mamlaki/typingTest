@@ -104,6 +104,8 @@ body {
       transition: filter 0.5s ease; }
       .toolbar .mode-section a:hover {
         filter: brightness(0.8); }
+    .toolbar .mode-section a.active {
+      color: #d0d0d0; }
     .toolbar .mode-section .time-selector i {
       margin-right: 5px; }
     .toolbar .mode-section .time-selection {
