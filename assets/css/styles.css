@@ -208,7 +208,13 @@ footer {
 .hidden {
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.5s ease, visibility 0.5s ease; }
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; }
+
+footer:not(.hidden),
+.toolbar:not(.hidden) {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease-in-out; }
 
 .correct {
   color: green; }
