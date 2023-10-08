@@ -103,4 +103,39 @@ timeSelections.forEach(function (timeSelection) {
         timeSelection.classList.add('active');
     });
 });
+var hasStartedTyping = false;
+function hideUIElements() {
+    var footer = document.querySelector('footer');
+    var toolbar = document.querySelector('.toolbar');
+    if (footer)
+        footer.classList.add('hidden');
+    if (toolbar)
+        toolbar.classList.add('hidden');
+}
+function showUIElements() {
+    var footer = document.querySelector('footer');
+    var toolbar = document.querySelector('.toolbar');
+    if (footer)
+        footer.classList.remove('hidden');
+    if (toolbar)
+        toolbar.classList.remove('hidden');
+}
+typingArea === null || typingArea === void 0 ? void 0 : typingArea.addEventListener('keydown', function (e) {
+    var isFooterVisible = document.querySelector('footer:not(.hidden)');
+    var isToolbarVisible = document.querySelector('.toolbar:not(.hidden)');
+    if (!hasStartedTyping || (hasStartedTyping && (isFooterVisible || isToolbarVisible))) {
+        hideUIElements();
+        hasStartedTyping = true;
+    }
+});
+document.addEventListener('mousemove', function () {
+    if (hasStartedTyping) {
+        showUIElements();
+    }
+});
+document.addEventListener('click', function (e) {
+    if (hasStartedTyping && e.target !== typingArea) {
+        showUIElements();
+    }
+});
 //# sourceMappingURL=app.js.map

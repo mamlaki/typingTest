@@ -205,6 +205,11 @@ footer {
         flex-direction: column;
         gap: 0.5rem; } }
 
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease; }
+
 .correct {
   color: green; }
 

@@ -116,8 +116,49 @@ const timeSelections: NodeListOf<HTMLElement> = document.querySelectorAll('.time
 timeSelections.forEach(timeSelection => {
   timeSelection.addEventListener('click', (e) => {
     e.preventDefault()
-    
+
     timeSelections.forEach(element => element.classList.remove('active'))
     timeSelection.classList.add('active')
   })
+})
+
+
+let hasStartedTyping = false
+
+function hideUIElements() {
+  const footer = document.querySelector('footer')
+  const toolbar = document.querySelector('.toolbar')
+
+  if (footer) footer.classList.add('hidden')
+  if (toolbar) toolbar.classList.add('hidden')
+}
+
+function showUIElements() {
+  const footer = document.querySelector('footer')
+  const toolbar = document.querySelector('.toolbar')
+
+  if (footer) footer.classList.remove('hidden')
+  if (toolbar) toolbar.classList.remove('hidden')
+}
+
+typingArea?.addEventListener('keydown', (e) => {
+  const isFooterVisible = document.querySelector('footer:not(.hidden)')
+  const isToolbarVisible = document.querySelector('.toolbar:not(.hidden)')
+
+  if (!hasStartedTyping || (hasStartedTyping && (isFooterVisible || isToolbarVisible))) {
+    hideUIElements()
+    hasStartedTyping = true
+  }
+})
+
+document.addEventListener('mousemove', () => {
+  if (hasStartedTyping) {
+    showUIElements()
+  }
+})
+
+document.addEventListener('click', (e) => {
+  if (hasStartedTyping && e.target !== typingArea) {
+    showUIElements()
+  }
 })
