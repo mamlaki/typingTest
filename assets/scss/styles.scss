@@ -67,6 +67,54 @@ body {
   position: relative;
 }
 
+.toolbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 9px;
+  padding: 3px 10px;
+  margin-bottom: 10px;
+  font-size: 1.6rem;
+  height: 40px;
+
+  .mode-section {
+    display: flex;
+    align-items: center;
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: filter 0.5s ease;
+
+      &:hover {
+        filter: brightness(0.8);
+      }
+    }
+
+    .time-selector i {
+      margin-right: 5px;
+    }
+
+    .time-selection {
+      margin-right: 10px;
+    }
+
+    .separator {
+      content: "";
+      display: inline-block;
+      width: 3px;
+      border-radius: 9px;
+      height: 20px;
+      background-color: #FFF;
+      margin: 0 10px;
+    }
+  }
+}
+
 .focus-message {
   position: absolute;
   top: 50%;
