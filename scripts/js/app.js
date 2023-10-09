@@ -25,6 +25,16 @@ if (startBtn && typingArea) {
             currentPosition--;
             resetCharacterStyle(currentPosition);
         }
+        else if (e.key === ' ') {
+            var nextSpacePosition = currentPrompt.indexOf(' ', currentPosition);
+            if (nextSpacePosition === -1) {
+                nextSpacePosition = currentPrompt.length;
+            }
+            for (var i = currentPosition; i < nextSpacePosition; i++) {
+                applyCharacterStyle('incorrect', i);
+            }
+            currentPosition = nextSpacePosition + 1;
+        }
         else if (e.key.length === 1 && currentPosition < currentPrompt.length) {
             var charTyped = e.key;
             if (charTyped === currentPrompt[currentPosition]) {
@@ -55,12 +65,13 @@ if (focusMessage) {
         typingArea === null || typingArea === void 0 ? void 0 : typingArea.focus();
     });
 }
-function applyCharacterStyle(className) {
+function applyCharacterStyle(className, position) {
+    if (position === void 0) { position = currentPosition; }
     if (typingArea) {
-        var targetNode = typingArea.childNodes[currentPosition];
+        var targetNode = typingArea.childNodes[position];
         if (targetNode) {
             targetNode.className = className;
-            setCursorAfterStyledChar(typingArea, currentPosition + 1);
+            setCursorAfterStyledChar(typingArea, position + 1);
         }
     }
 }

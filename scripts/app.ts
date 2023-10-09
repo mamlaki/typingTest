@@ -29,6 +29,17 @@ if (startBtn && typingArea) {
     if (e.key === 'Backspace' && currentPosition > 0) {
       currentPosition--
       resetCharacterStyle(currentPosition)
+    } else if (e.key === ' ') {
+      let nextSpacePosition = currentPrompt.indexOf(' ', currentPosition)
+
+      if (nextSpacePosition === -1) {
+        nextSpacePosition = currentPrompt.length
+      }
+      
+      for (let i = currentPosition; i < nextSpacePosition; i++) {
+        applyCharacterStyle('incorrect', i)
+      }
+      currentPosition = nextSpacePosition + 1
     } else if (e.key.length === 1 && currentPosition < currentPrompt.length) {
       const charTyped = e.key
       if (charTyped === currentPrompt[currentPosition]) {
@@ -64,12 +75,12 @@ if (focusMessage) {
   })
 }
 
-function applyCharacterStyle(className: string) {
+function applyCharacterStyle(className: string, position: number = currentPosition) {
   if (typingArea) {
-    const targetNode = typingArea.childNodes[currentPosition] as HTMLElement
+    const targetNode = typingArea.childNodes[position] as HTMLElement
     if (targetNode) {
       targetNode.className = className
-      setCursorAfterStyledChar(typingArea, currentPosition + 1)
+      setCursorAfterStyledChar(typingArea, position + 1)
     }
   }
 }
