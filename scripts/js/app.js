@@ -42,6 +42,17 @@ if (startBtn && typingArea) {
         var isWordCorrect = function (start, end) {
             return currentPrompt.substring(start, end) === userInput.slice(start, end).join('');
         };
+        var hasStartedTypingCurrentWord = function () {
+            var currentWordStart = getWordStartPosition(currentPosition);
+            return userInput.slice(currentWordStart, currentPosition).join('').length > 0;
+        };
+        var markUntypedAsIncorrect = function (start, end) {
+            for (var i = start; i < end; i++) {
+                if (typeof userInput[i] === 'undefined') {
+                    applyCharacterStyle('incorrect', i);
+                }
+            }
+        };
         if (e.key === 'Backspace' && currentPosition > 0) {
             var currentWordStart = getWordStartPosition(currentPosition);
             var prevWordStart = getWordStartPosition(currentPosition - 1);
@@ -58,8 +69,15 @@ if (startBtn && typingArea) {
             }
         }
         else if (e.key === ' ') {
+            if (!hasStartedTypingCurrentWord()) {
+                console.log('Cannot skip word without typing.');
+                return;
+            }
             var previousWordStart = getWordStartPosition(currentPosition);
             var previousWordEnd = currentPosition;
+            if (!isWordCorrect(previousWordStart, previousWordEnd)) {
+                markUntypedAsIncorrect(previousWordEnd, getWordEndPosition(currentPosition));
+            }
             if (isWordCorrect(previousWordStart, previousWordEnd)) {
                 console.log('Locking Previous Word Start: ', previousWordStart);
                 if (!lockedPositions_1.includes(previousWordStart)) {

@@ -50,6 +50,19 @@ if (startBtn && typingArea) {
       return currentPrompt.substring(start, end) === userInput.slice(start, end).join('')
     }
 
+    const hasStartedTypingCurrentWord = () => {
+      const currentWordStart = getWordStartPosition(currentPosition)
+      return userInput.slice(currentWordStart, currentPosition).join('').length > 0
+    }
+
+    const markUntypedAsIncorrect = (start: number, end: number) => {
+      for (let i = start; i < end; i++) {
+        if (typeof userInput[i] === 'undefined') {
+          applyCharacterStyle('incorrect', i)
+        }
+      }
+    }
+
     if (e.key === 'Backspace' && currentPosition > 0) {
       const currentWordStart = getWordStartPosition(currentPosition)
       const prevWordStart = getWordStartPosition(currentPosition - 1)
@@ -65,8 +78,17 @@ if (startBtn && typingArea) {
         return
       }
     } else if (e.key === ' ') {
+     if (!hasStartedTypingCurrentWord()) {
+      console.log('Cannot skip word without typing.')
+      return
+     }
+      
      const previousWordStart = getWordStartPosition(currentPosition)
      const previousWordEnd = currentPosition
+
+     if (!isWordCorrect(previousWordStart, previousWordEnd)) {
+      markUntypedAsIncorrect(previousWordEnd, getWordEndPosition(currentPosition))
+     }
 
      if (isWordCorrect(previousWordStart, previousWordEnd)) {
       console.log('Locking Previous Word Start: ', previousWordStart)
