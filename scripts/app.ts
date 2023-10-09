@@ -19,6 +19,23 @@ function loadNewPrompt() {
   userInput =[]
 }
 
+function resetTimer() {
+  if (countdownTimer !== null) {
+    clearInterval(countdownTimer)
+  }
+  const activeTime = document.querySelector('.time-selection.active')?.textContent || '15'
+  countdownValue = parseInt(activeTime)
+
+  if (countdownElement) {
+    countdownElement.textContent = countdownValue.toString()
+    countdownElement.style.opacity = '0'
+  }
+
+  hasStartedTyping = false
+  typingArea?.setAttribute('contenteditable', 'true')
+  loadNewPrompt()
+}
+
 if (startBtn && typingArea) {
   typingArea.classList.add('unfocused')
   loadNewPrompt()
@@ -26,7 +43,7 @@ if (startBtn && typingArea) {
   typingArea.classList.remove('unfocused')
 
   startBtn.addEventListener('click', () => {
-    loadNewPrompt()
+    resetTimer()
   })
 
   const lockedPositions: number[] = []
@@ -264,19 +281,18 @@ typingArea?.addEventListener('keydown', (e) => {
   if (e.key === 'Tab') {
     e.preventDefault()
     startBtn?.focus()
-  }
-
-  typingArea?.classList.add('typing-in-progress')
-})
-
-document.addEventListener('mousemove', () => {
-  if (hasStartedTyping) {
     showUIElements()
+  } else {
+    typingArea?.classList.add('typing-in-progress')  
   }
 })
 
-document.addEventListener('click', (e) => {
-  if (hasStartedTyping && e.target !== typingArea) {
+document.addEventListener('mousemove', showUIElements)
+
+document.addEventListener('click', showUIElements)
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && document.activeElement === startBtn) {
     showUIElements()
   }
 })

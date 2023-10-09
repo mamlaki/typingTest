@@ -16,13 +16,28 @@ function loadNewPrompt() {
     typingArea === null || typingArea === void 0 ? void 0 : typingArea.classList.remove('typing-in-progress');
     userInput = [];
 }
+function resetTimer() {
+    var _a;
+    if (countdownTimer !== null) {
+        clearInterval(countdownTimer);
+    }
+    var activeTime = ((_a = document.querySelector('.time-selection.active')) === null || _a === void 0 ? void 0 : _a.textContent) || '15';
+    countdownValue = parseInt(activeTime);
+    if (countdownElement) {
+        countdownElement.textContent = countdownValue.toString();
+        countdownElement.style.opacity = '0';
+    }
+    hasStartedTyping = false;
+    typingArea === null || typingArea === void 0 ? void 0 : typingArea.setAttribute('contenteditable', 'true');
+    loadNewPrompt();
+}
 if (startBtn && typingArea) {
     typingArea.classList.add('unfocused');
     loadNewPrompt();
     typingArea.focus();
     typingArea.classList.remove('unfocused');
     startBtn.addEventListener('click', function () {
-        loadNewPrompt();
+        resetTimer();
     });
     var lockedPositions_1 = [];
     typingArea.addEventListener('keydown', function (e) {
@@ -231,16 +246,16 @@ typingArea === null || typingArea === void 0 ? void 0 : typingArea.addEventListe
     if (e.key === 'Tab') {
         e.preventDefault();
         startBtn === null || startBtn === void 0 ? void 0 : startBtn.focus();
-    }
-    typingArea === null || typingArea === void 0 ? void 0 : typingArea.classList.add('typing-in-progress');
-});
-document.addEventListener('mousemove', function () {
-    if (hasStartedTyping) {
         showUIElements();
     }
+    else {
+        typingArea === null || typingArea === void 0 ? void 0 : typingArea.classList.add('typing-in-progress');
+    }
 });
-document.addEventListener('click', function (e) {
-    if (hasStartedTyping && e.target !== typingArea) {
+document.addEventListener('mousemove', showUIElements);
+document.addEventListener('click', showUIElements);
+document.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && document.activeElement === startBtn) {
         showUIElements();
     }
 });
