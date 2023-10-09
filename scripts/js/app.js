@@ -258,5 +258,9 @@ document.addEventListener('keydown', function (e) {
     if (e.key === 'Enter' && document.activeElement === startBtn) {
         showUIElements();
     }
+    if (e.key === 'Tab') {
+        e.preventDefault();
+        startBtn === null || startBtn === void 0 ? void 0 : startBtn.focus();
+    }
 });
 //# sourceMappingURL=app.js.map

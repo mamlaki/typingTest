@@ -295,4 +295,9 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' && document.activeElement === startBtn) {
     showUIElements()
   }
+
+  if (e.key === 'Tab') {
+    e.preventDefault()
+    startBtn?.focus()
+  }
 })
