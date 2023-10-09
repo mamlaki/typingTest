@@ -160,20 +160,23 @@ body {
     margin-right: 10px; }
 
 .typing-area {
-  width: 80%;
+  width: 100%;
   min-height: 150px;
   outline: none;
   filter: none;
   transition: filter 0.3s ease;
   transition-delay: 0.5s;
   position: relative;
-  caret-color: transparent; }
+  caret-color: transparent;
+  text-align: justify;
+  margin: 0 auto;
+  margin-bottom: 2rem; }
   .typing-area.unfocused {
     filter: blur(2px); }
   .typing-area::before {
     content: '';
     position: absolute;
-    height: 20%;
+    height: 7%;
     width: 0;
     top: 2px;
     left: -2px;
@@ -184,7 +187,7 @@ body {
     transform: translateX(var(--cursor-translate-x, 0px)); }
   @media (max-width: 768px) {
     .typing-area::before {
-      height: 13%; } }
+      height: 7%; } }
   .typing-area:not(.unfocused)::before {
     width: 2px; }
   .typing-area.typing-in-progress::before {
@@ -214,7 +217,7 @@ body {
   outline: none;
   cursor: pointer;
   padding: 0;
-  margin: 0;
+  margin-top: 4rem;
   position: relative; }
   .start-btn:focus:before {
     content: '';

@@ -173,7 +173,7 @@ body {
 }
 
 .typing-area {
-  width: 80%;
+  width: 100%;
   min-height: 150px;
   outline: none;
   filter: none;
@@ -181,6 +181,9 @@ body {
   transition-delay: 0.5s;
   position: relative;
   caret-color: transparent;
+  text-align: justify;
+  margin: 0 auto;
+  margin-bottom: 2rem;
 
   &.unfocused {
     filter: blur(2px);
@@ -189,7 +192,7 @@ body {
   &::before {
     content: '';
     position: absolute;
-    height: 20%;
+    height: 7%;
     width: 0;
     top: 2px;
     left: -2px;
@@ -202,7 +205,7 @@ body {
 
   @media (max-width: 768px) {
     &::before {
-      height: 13%;
+      height: 7%;
     }
   }
 
@@ -245,7 +248,7 @@ body {
   outline: none;
   cursor: pointer;
   padding: 0;
-  margin: 0;
+  margin-top: 4rem;
   position: relative;
 
   &:focus:before {
