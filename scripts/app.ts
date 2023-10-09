@@ -10,6 +10,7 @@ function loadNewPrompt() {
   typingArea!.innerHTML = currentPrompt.split('').map(char => `<span>${char}</span>`).join('')
   currentPosition = 0
   setCursorAtStart(typingArea!)
+  typingArea?.classList.remove('typing-in-progress')
 }
 
 if (startBtn && typingArea) {
@@ -94,20 +95,18 @@ function setCursorAtStart(element: HTMLElement) {
 }
 
 function setCursorAfterStyledChar(element: HTMLElement, position: number) {
-  const range = document.createRange()
-  const sel = window.getSelection()
+  const styledSpans = element.querySelectorAll('span')
+  const targetSpan = styledSpans[position - 1]
 
-  const styledSpan = element.querySelectorAll('span')[position - 1]
+  if (targetSpan) {
+    const spanRect = targetSpan.getBoundingClientRect()
+    const containerRect = element.getBoundingClientRect()
+    const leftDistance = spanRect.left - containerRect.left + spanRect.width
 
-  if (styledSpan) {
-    range.setStartAfter(styledSpan)
+    element.style.setProperty('--cursor-translate-x', `${leftDistance}px`)
   } else {
-    range.setStart(element.childNodes[0], position)
+    element.style.removeProperty('--cursor-translate-x')
   }
-
-  range.collapse(true)
-  sel?.removeAllRanges()
-  sel?.addRange(range)
 }
 
 
@@ -154,6 +153,8 @@ typingArea?.addEventListener('keydown', (e) => {
     e.preventDefault()
     startBtn?.focus()
   }
+
+  typingArea?.classList.add('typing-in-progress')
 })
 
 document.addEventListener('mousemove', () => {

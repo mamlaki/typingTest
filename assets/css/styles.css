@@ -141,9 +141,33 @@ body {
   outline: none;
   filter: none;
   transition: filter 0.3s ease;
-  transition-delay: 0.5s; }
+  transition-delay: 0.5s;
+  position: relative;
+  caret-color: transparent; }
   .typing-area.unfocused {
     filter: blur(2px); }
+  .typing-area::before {
+    content: '';
+    position: absolute;
+    height: 24px;
+    width: 0;
+    left: -2px;
+    border-radius: 9px;
+    background-color: rgba(255, 255, 255, 0.7);
+    animation: caretBlink 1s infinite;
+    transition: transform 0.1s ease-out;
+    transform: translateX(var(--cursor-translate-x, 0px)); }
+  .typing-area:not(.unfocused)::before {
+    width: 2px; }
+  .typing-area.typing-in-progress::before {
+    animation: none; }
+
+@keyframes caretBlink {
+  0%,
+  100% {
+    opacity: 1; }
+  50% {
+    opacity: 0; } }
 
 .typing-area:not(.unfocused) {
   transition-delay: 0s; }

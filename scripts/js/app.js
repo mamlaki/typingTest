@@ -9,6 +9,7 @@ function loadNewPrompt() {
     typingArea.innerHTML = currentPrompt.split('').map(function (char) { return "<span>".concat(char, "</span>"); }).join('');
     currentPosition = 0;
     setCursorAtStart(typingArea);
+    typingArea === null || typingArea === void 0 ? void 0 : typingArea.classList.remove('typing-in-progress');
 }
 if (startBtn && typingArea) {
     typingArea.classList.add('unfocused');
@@ -82,18 +83,17 @@ function setCursorAtStart(element) {
     element.focus();
 }
 function setCursorAfterStyledChar(element, position) {
-    var range = document.createRange();
-    var sel = window.getSelection();
-    var styledSpan = element.querySelectorAll('span')[position - 1];
-    if (styledSpan) {
-        range.setStartAfter(styledSpan);
+    var styledSpans = element.querySelectorAll('span');
+    var targetSpan = styledSpans[position - 1];
+    if (targetSpan) {
+        var spanRect = targetSpan.getBoundingClientRect();
+        var containerRect = element.getBoundingClientRect();
+        var leftDistance = spanRect.left - containerRect.left + spanRect.width;
+        element.style.setProperty('--cursor-translate-x', "".concat(leftDistance, "px"));
     }
     else {
-        range.setStart(element.childNodes[0], position);
+        element.style.removeProperty('--cursor-translate-x');
     }
-    range.collapse(true);
-    sel === null || sel === void 0 ? void 0 : sel.removeAllRanges();
-    sel === null || sel === void 0 ? void 0 : sel.addRange(range);
 }
 var timeSelections = document.querySelectorAll('.time-selection');
 timeSelections.forEach(function (timeSelection) {
@@ -131,6 +131,7 @@ typingArea === null || typingArea === void 0 ? void 0 : typingArea.addEventListe
         e.preventDefault();
         startBtn === null || startBtn === void 0 ? void 0 : startBtn.focus();
     }
+    typingArea === null || typingArea === void 0 ? void 0 : typingArea.classList.add('typing-in-progress');
 });
 document.addEventListener('mousemove', function () {
     if (hasStartedTyping) {
