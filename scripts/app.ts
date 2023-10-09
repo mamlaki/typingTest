@@ -1,10 +1,14 @@
 const typingArea: HTMLElement | null = document.querySelector('.typing-area')
 const startBtn: HTMLElement | null = document.querySelector('.start-btn')
+const countdownElement: HTMLElement | null = document.querySelector('.countdown')
 
 const sampleTexts: string[] = ['Sample text 1', 'Sample text 2', 'Sample text 3']
 let currentPosition: number = 0
 let currentPrompt: string = ''
 let userInput: string[] = []
+
+let countdownTimer: number | null = null
+let countdownValue: number = 0
 
 function loadNewPrompt() {
   currentPrompt = sampleTexts[Math.floor(Math.random() * sampleTexts.length)]
@@ -118,6 +122,36 @@ if (startBtn && typingArea) {
     }
     console.log(`End Current Position: ${currentPosition}`);
     setCursorAfterStyledChar(typingArea, currentPosition)
+
+    if (!hasStartedTyping) {
+      const activeTime = document.querySelector('.time-selection.active')?.textContent || '15'
+      countdownValue = parseInt(activeTime)
+
+      if (countdownElement) {
+        countdownElement.textContent = countdownValue.toString()
+        countdownElement.style.opacity = '1'
+        countdownElement.style.transition = 'opacity 0.3s ease'
+      }
+
+      countdownTimer = setInterval(() => {
+        countdownValue--
+        if (countdownElement) {
+          countdownElement.textContent = countdownValue.toString()
+        }
+
+        if (countdownValue <= 0) {
+          if (countdownElement) {
+            countdownElement.textContent = 'Done.'
+          }
+          if (countdownTimer !== null) {
+            clearInterval(countdownTimer)
+          }
+          typingArea?.setAttribute('contenteditable', 'false')
+        }
+      }, 1000)
+
+      hasStartedTyping = true
+    }
   })
 
   typingArea.addEventListener('click', (e) => {

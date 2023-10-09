@@ -1,10 +1,13 @@
 "use strict";
 var typingArea = document.querySelector('.typing-area');
 var startBtn = document.querySelector('.start-btn');
+var countdownElement = document.querySelector('.countdown');
 var sampleTexts = ['Sample text 1', 'Sample text 2', 'Sample text 3'];
 var currentPosition = 0;
 var currentPrompt = '';
 var userInput = [];
+var countdownTimer = null;
+var countdownValue = 0;
 function loadNewPrompt() {
     currentPrompt = sampleTexts[Math.floor(Math.random() * sampleTexts.length)];
     typingArea.innerHTML = currentPrompt.split('').map(function (char) { return "<span>".concat(char, "</span>"); }).join('');
@@ -23,6 +26,7 @@ if (startBtn && typingArea) {
     });
     var lockedPositions_1 = [];
     typingArea.addEventListener('keydown', function (e) {
+        var _a;
         console.log("Key Pressed: ".concat(e.key));
         console.log("Initial Current Position: ".concat(currentPosition));
         e.preventDefault();
@@ -107,6 +111,31 @@ if (startBtn && typingArea) {
         }
         console.log("End Current Position: ".concat(currentPosition));
         setCursorAfterStyledChar(typingArea, currentPosition);
+        if (!hasStartedTyping) {
+            var activeTime = ((_a = document.querySelector('.time-selection.active')) === null || _a === void 0 ? void 0 : _a.textContent) || '15';
+            countdownValue = parseInt(activeTime);
+            if (countdownElement) {
+                countdownElement.textContent = countdownValue.toString();
+                countdownElement.style.opacity = '1';
+                countdownElement.style.transition = 'opacity 0.3s ease';
+            }
+            countdownTimer = setInterval(function () {
+                countdownValue--;
+                if (countdownElement) {
+                    countdownElement.textContent = countdownValue.toString();
+                }
+                if (countdownValue <= 0) {
+                    if (countdownElement) {
+                        countdownElement.textContent = 'Done.';
+                    }
+                    if (countdownTimer !== null) {
+                        clearInterval(countdownTimer);
+                    }
+                    typingArea === null || typingArea === void 0 ? void 0 : typingArea.setAttribute('contenteditable', 'false');
+                }
+            }, 1000);
+            hasStartedTyping = true;
+        }
     });
     typingArea.addEventListener('click', function (e) {
         e.preventDefault();

@@ -84,44 +84,65 @@ body {
   position: relative;
   overflow-y: hidden; }
 
-.toolbar {
+.toolbar-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 9px;
-  padding: 3px 10px;
-  margin-bottom: 20px;
-  font-size: 1.6rem;
-  height: 40px; }
-  .toolbar .mode-section {
+  position: relative; }
+  .toolbar-container .toolbar {
     display: flex;
-    align-items: center; }
-    .toolbar .mode-section a {
-      text-decoration: none;
-      color: inherit;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 9px;
+    padding: 3px 10px;
+    margin-bottom: 20px;
+    font-size: 1.6rem;
+    height: 40px; }
+    .toolbar-container .toolbar .mode-section {
       display: flex;
-      align-items: center;
-      cursor: pointer;
-      transition: filter 0.3s ease, color 0.3s ease; }
-      .toolbar .mode-section a:hover {
-        filter: brightness(0.8); }
-      .toolbar .mode-section a:active {
-        color: #496788; }
-    .toolbar .mode-section a.active {
-      color: #D0D0D0; }
-    .toolbar .mode-section .time-selector i {
-      margin-right: 5px; }
-    .toolbar .mode-section .time-selection {
-      margin-right: 10px; }
-    .toolbar .mode-section .separator {
-      content: "";
-      display: inline-block;
-      width: 3px;
-      border-radius: 9px;
-      height: 20px;
-      background-color: #FFF;
-      margin: 0 10px; }
+      align-items: center; }
+      .toolbar-container .toolbar .mode-section a {
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        transition: filter 0.3s ease, color 0.3s ease; }
+        .toolbar-container .toolbar .mode-section a:hover {
+          filter: brightness(0.8); }
+        .toolbar-container .toolbar .mode-section a:active {
+          color: #496788; }
+      .toolbar-container .toolbar .mode-section a.active {
+        color: #D0D0D0; }
+      .toolbar-container .toolbar .mode-section .time-selector i {
+        margin-right: 5px; }
+      .toolbar-container .toolbar .mode-section .time-selection {
+        margin-right: 10px; }
+      .toolbar-container .toolbar .mode-section .separator {
+        content: "";
+        display: inline-block;
+        width: 3px;
+        border-radius: 9px;
+        height: 20px;
+        background-color: #FFF;
+        margin: 0 10px; }
+  .toolbar-container .countdown {
+    position: absolute;
+    left: -250px;
+    font-size: 1.6rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #FFF;
+    padding: 10px 20px;
+    border-radius: 5px;
+    opacity: 0; }
+    @media (max-width: 768px) {
+      .toolbar-container .countdown {
+        left: -244px; } }
+    @media (max-width: 568px) {
+      .toolbar-container .countdown {
+        left: -178px; } }
+    @media (max-width: 480px) {
+      .toolbar-container .countdown {
+        left: -89px; } }
 
 .focus-message {
   position: absolute;
