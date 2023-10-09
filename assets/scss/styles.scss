@@ -12,6 +12,7 @@ body {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    margin-top: 1rem;
   }
 
   ul {
@@ -274,6 +275,7 @@ footer {
   bottom: 0;
   width: 100%;
   font-size: 1.4rem;
+  margin-bottom: 1rem;
 
   .footer-links {
     display: flex;
