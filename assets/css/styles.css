@@ -146,9 +146,10 @@ body {
 
 .focus-message {
   position: absolute;
-  top: 30%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) translateY(10px);
+  background-color: black;
   opacity: 0;
   padding: 10px 20px;
   border-radius: 5px;
@@ -172,7 +173,7 @@ body {
   margin: 0 auto;
   margin-bottom: 2rem; }
   .typing-area.unfocused {
-    filter: blur(2px); }
+    filter: blur(3.5px); }
   .typing-area::before {
     content: '';
     position: absolute;
