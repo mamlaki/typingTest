@@ -68,6 +68,7 @@ body {
   overflow: auto;
   padding: 10px;
   position: relative;
+  overflow-y: hidden;
 }
 
 .toolbar {
@@ -151,7 +152,7 @@ body {
   transition-delay: 0.5s;
   position: relative;
   caret-color: transparent;
-  
+
   &.unfocused {
     filter: blur(2px);
   }
