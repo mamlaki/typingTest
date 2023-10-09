@@ -1,8 +1,9 @@
+import { getRandomWords } from "./getRandomWords.js"
+
 const typingArea: HTMLElement | null = document.querySelector('.typing-area')
 const startBtn: HTMLElement | null = document.querySelector('.start-btn')
 const countdownElement: HTMLElement | null = document.querySelector('.countdown')
 
-const sampleTexts: string[] = ['Sample text 1', 'Sample text 2', 'Sample text 3']
 let currentPosition: number = 0
 let currentPrompt: string = ''
 let userInput: string[] = []
@@ -10,13 +11,18 @@ let userInput: string[] = []
 let countdownTimer: number | null = null
 let countdownValue: number = 0
 
-function loadNewPrompt() {
-  currentPrompt = sampleTexts[Math.floor(Math.random() * sampleTexts.length)]
-  typingArea!.innerHTML = currentPrompt.split('').map(char => `<span>${char}</span>`).join('')
-  currentPosition = 0
-  setCursorAtStart(typingArea!)
-  typingArea?.classList.remove('typing-in-progress')
-  userInput =[]
+async function loadNewPrompt() {
+  try {
+    const words = await getRandomWords(50, 8)
+    currentPrompt = words.join(' ')
+    typingArea!.innerHTML = currentPrompt.split('').map(char => `<span>${char}</span>`).join('')
+    currentPosition = 0
+    setCursorAtStart(typingArea!)
+    typingArea?.classList.remove('typing-in-progress')
+    userInput = []
+  } catch (error) {
+    console.error('Error in loadNewPrompt:', error)
+  }
 }
 
 function resetTimer() {
