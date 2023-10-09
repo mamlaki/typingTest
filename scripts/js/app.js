@@ -4,12 +4,14 @@ var startBtn = document.querySelector('.start-btn');
 var sampleTexts = ['Sample text 1', 'Sample text 2', 'Sample text 3'];
 var currentPosition = 0;
 var currentPrompt = '';
+var userInput = [];
 function loadNewPrompt() {
     currentPrompt = sampleTexts[Math.floor(Math.random() * sampleTexts.length)];
     typingArea.innerHTML = currentPrompt.split('').map(function (char) { return "<span>".concat(char, "</span>"); }).join('');
     currentPosition = 0;
     setCursorAtStart(typingArea);
     typingArea === null || typingArea === void 0 ? void 0 : typingArea.classList.remove('typing-in-progress');
+    userInput = [];
 }
 if (startBtn && typingArea) {
     typingArea.classList.add('unfocused');
@@ -19,24 +21,64 @@ if (startBtn && typingArea) {
     startBtn.addEventListener('click', function () {
         loadNewPrompt();
     });
+    var lockedPositions_1 = [];
     typingArea.addEventListener('keydown', function (e) {
+        console.log("Key Pressed: ".concat(e.key));
+        console.log("Initial Current Position: ".concat(currentPosition));
         e.preventDefault();
+        var getWordStartPosition = function (pos) {
+            var tempPos = (pos - 1 < 0) ? 0 : pos - 1;
+            var startPos = currentPrompt.lastIndexOf(' ', tempPos) + 1;
+            if (startPos < 0)
+                startPos = 0;
+            return startPos;
+        };
+        var getWordEndPosition = function (pos) {
+            var endPos = currentPrompt.indexOf(' ', pos);
+            if (endPos === -1)
+                endPos = currentPrompt.length;
+            return endPos;
+        };
+        var isWordCorrect = function (start, end) {
+            return currentPrompt.substring(start, end) === userInput.slice(start, end).join('');
+        };
         if (e.key === 'Backspace' && currentPosition > 0) {
-            currentPosition--;
-            resetCharacterStyle(currentPosition);
+            var currentWordStart = getWordStartPosition(currentPosition);
+            var prevWordStart = getWordStartPosition(currentPosition - 1);
+            console.log("Current Word Start: ".concat(currentWordStart));
+            console.log("Previous Word Start: ".concat(prevWordStart));
+            console.log("Locked Positions: ".concat(lockedPositions_1));
+            if (currentPosition > currentWordStart || !lockedPositions_1.includes(prevWordStart)) {
+                currentPosition--;
+                resetCharacterStyle(currentPosition);
+            }
+            else {
+                console.log('Trying to backspace into a locked position. Operation blocked.');
+                return;
+            }
         }
         else if (e.key === ' ') {
+            var previousWordStart = getWordStartPosition(currentPosition);
+            var previousWordEnd = currentPosition;
+            if (isWordCorrect(previousWordStart, previousWordEnd)) {
+                console.log('Locking Previous Word Start: ', previousWordStart);
+                if (!lockedPositions_1.includes(previousWordStart)) {
+                    lockedPositions_1.push(previousWordStart);
+                }
+            }
+            else if (lockedPositions_1.includes(previousWordStart)) {
+                var index = lockedPositions_1.indexOf(previousWordStart);
+                lockedPositions_1.splice(index, 1);
+            }
             var nextSpacePosition = currentPrompt.indexOf(' ', currentPosition);
             if (nextSpacePosition === -1) {
                 nextSpacePosition = currentPrompt.length;
-            }
-            for (var i = currentPosition; i < nextSpacePosition; i++) {
-                applyCharacterStyle('incorrect', i);
             }
             currentPosition = nextSpacePosition + 1;
         }
         else if (e.key.length === 1 && currentPosition < currentPrompt.length) {
             var charTyped = e.key;
+            userInput[currentPosition] = charTyped;
             if (charTyped === currentPrompt[currentPosition]) {
                 applyCharacterStyle('correct');
             }
@@ -45,6 +87,7 @@ if (startBtn && typingArea) {
             }
             currentPosition++;
         }
+        console.log("End Current Position: ".concat(currentPosition));
         setCursorAfterStyledChar(typingArea, currentPosition);
     });
     typingArea.addEventListener('click', function (e) {

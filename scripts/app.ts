@@ -4,6 +4,7 @@ const startBtn: HTMLElement | null = document.querySelector('.start-btn')
 const sampleTexts: string[] = ['Sample text 1', 'Sample text 2', 'Sample text 3']
 let currentPosition: number = 0
 let currentPrompt: string = ''
+let userInput: string[] = []
 
 function loadNewPrompt() {
   currentPrompt = sampleTexts[Math.floor(Math.random() * sampleTexts.length)]
@@ -11,6 +12,7 @@ function loadNewPrompt() {
   currentPosition = 0
   setCursorAtStart(typingArea!)
   typingArea?.classList.remove('typing-in-progress')
+  userInput =[]
 }
 
 if (startBtn && typingArea) {
@@ -23,25 +25,68 @@ if (startBtn && typingArea) {
     loadNewPrompt()
   })
 
+  const lockedPositions: number[] = []
+
   typingArea.addEventListener('keydown', (e) => {
+    console.log(`Key Pressed: ${e.key}`);
+    console.log(`Initial Current Position: ${currentPosition}`);
+
     e.preventDefault()
 
-    if (e.key === 'Backspace' && currentPosition > 0) {
-      currentPosition--
-      resetCharacterStyle(currentPosition)
-    } else if (e.key === ' ') {
-      let nextSpacePosition = currentPrompt.indexOf(' ', currentPosition)
+    const getWordStartPosition = (pos: number) => {
+      let tempPos = (pos - 1 < 0) ? 0 : pos - 1
+      let startPos = currentPrompt.lastIndexOf(' ', tempPos) + 1
+      if (startPos < 0) startPos = 0
+      return startPos
+    }
 
-      if (nextSpacePosition === -1) {
-        nextSpacePosition = currentPrompt.length
+    const getWordEndPosition = (pos: number) => {
+      let endPos = currentPrompt.indexOf(' ', pos)
+      if (endPos === -1) endPos = currentPrompt.length
+      return endPos
+    }
+
+    const isWordCorrect = (start: number, end: number) => {
+      return currentPrompt.substring(start, end) === userInput.slice(start, end).join('')
+    }
+
+    if (e.key === 'Backspace' && currentPosition > 0) {
+      const currentWordStart = getWordStartPosition(currentPosition)
+      const prevWordStart = getWordStartPosition(currentPosition - 1)
+
+      console.log(`Current Word Start: ${currentWordStart}`);
+      console.log(`Previous Word Start: ${prevWordStart}`);
+      console.log(`Locked Positions: ${lockedPositions}`);
+      if (currentPosition > currentWordStart || !lockedPositions.includes(prevWordStart)) {
+        currentPosition--
+        resetCharacterStyle(currentPosition)
+      } else {
+        console.log('Trying to backspace into a locked position. Operation blocked.');
+        return
       }
-      
-      for (let i = currentPosition; i < nextSpacePosition; i++) {
-        applyCharacterStyle('incorrect', i)
+    } else if (e.key === ' ') {
+     const previousWordStart = getWordStartPosition(currentPosition)
+     const previousWordEnd = currentPosition
+
+     if (isWordCorrect(previousWordStart, previousWordEnd)) {
+      console.log('Locking Previous Word Start: ', previousWordStart)
+      if (!lockedPositions.includes(previousWordStart)) {
+        lockedPositions.push(previousWordStart)
       }
-      currentPosition = nextSpacePosition + 1
+     } else if (lockedPositions.includes(previousWordStart)) {
+      const index = lockedPositions.indexOf(previousWordStart)
+      lockedPositions.splice(index, 1)
+     }
+
+     let nextSpacePosition = currentPrompt.indexOf(' ', currentPosition)
+     if (nextSpacePosition === -1) {
+      nextSpacePosition = currentPrompt.length
+     }
+     currentPosition = nextSpacePosition + 1
     } else if (e.key.length === 1 && currentPosition < currentPrompt.length) {
       const charTyped = e.key
+      userInput[currentPosition] = charTyped
+
       if (charTyped === currentPrompt[currentPosition]) {
         applyCharacterStyle('correct')
       } else {
@@ -49,7 +94,7 @@ if (startBtn && typingArea) {
       }
       currentPosition++
     }
-
+    console.log(`End Current Position: ${currentPosition}`);
     setCursorAfterStyledChar(typingArea, currentPosition)
   })
 
