@@ -236,11 +236,15 @@ function setCursorAfterStyledChar(element: HTMLElement, position: number) {
   if (targetSpan) {
     const spanRect = targetSpan.getBoundingClientRect()
     const containerRect = element.getBoundingClientRect()
+
     const leftDistance = spanRect.left - containerRect.left + spanRect.width
+    const topDistance = spanRect.top - containerRect.top
 
     element.style.setProperty('--cursor-translate-x', `${leftDistance}px`)
+    element.style.setProperty('--cursor-translate-y', `${topDistance}px`)
   } else {
     element.style.removeProperty('--cursor-translate-x')
+    element.style.removeProperty('--cursor-translate-y')
   }
 }
 

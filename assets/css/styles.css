@@ -185,7 +185,7 @@ body {
     background-color: rgba(255, 255, 255, 0.7);
     animation: caretBlink 1s infinite;
     transition: transform 0.1s ease-out;
-    transform: translateX(var(--cursor-translate-x, 0px)); }
+    transform: translateX(var(--cursor-translate-x, 0px)) translateY(var(--cursor-translate-y, 0px)); }
   @media (max-width: 768px) {
     .typing-area::before {
       height: 7%; } }

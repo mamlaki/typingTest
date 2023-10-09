@@ -50,7 +50,7 @@ function loadNewPrompt() {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, getRandomWords(80, 8)];
+                    return [4 /*yield*/, getRandomWords(50, 8)];
                 case 1:
                     words = _a.sent();
                     currentPrompt = words.join(' ');
@@ -258,10 +258,13 @@ function setCursorAfterStyledChar(element, position) {
         var spanRect = targetSpan.getBoundingClientRect();
         var containerRect = element.getBoundingClientRect();
         var leftDistance = spanRect.left - containerRect.left + spanRect.width;
+        var topDistance = spanRect.top - containerRect.top;
         element.style.setProperty('--cursor-translate-x', "".concat(leftDistance, "px"));
+        element.style.setProperty('--cursor-translate-y', "".concat(topDistance, "px"));
     }
     else {
         element.style.removeProperty('--cursor-translate-x');
+        element.style.removeProperty('--cursor-translate-y');
     }
 }
 var timeSelections = document.querySelectorAll('.time-selection');
