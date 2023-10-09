@@ -160,14 +160,21 @@ body {
   &::before {
     content: '';
     position: absolute;
-    height: 24px;
+    height: 20%;
     width: 0;
+    top: 2px;
     left: -2px;
     border-radius: 9px;
     background-color: rgba(255, 255, 255, 0.7);
     animation: caretBlink 1s infinite;
     transition: transform 0.1s ease-out;
     transform: translateX(var(--cursor-translate-x, 0px));
+  }
+
+  @media (max-width: 768px) {
+    &::before {
+      height: 13%;
+    }
   }
 
   &:not(.unfocused)::before {
