@@ -38,16 +38,19 @@ export function getRandomWords(count, maxLength) {
     if (count === void 0) { count = 10; }
     if (maxLength === void 0) { maxLength = 8; }
     return __awaiter(this, void 0, void 0, function () {
-        var response, error_1;
+        var response, words, filteredWords, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 3, , 4]);
-                    return [4 /*yield*/, fetch("https://random-word-api.herokuapp.com/word?number=".concat(count, "&length=").concat(maxLength))];
+                    return [4 /*yield*/, fetch("https://random-word-api.herokuapp.com/word?number=".concat(count * 2))];
                 case 1:
                     response = _a.sent();
                     return [4 /*yield*/, response.json()];
-                case 2: return [2 /*return*/, _a.sent()];
+                case 2:
+                    words = _a.sent();
+                    filteredWords = words.filter(function (word) { return word.length <= maxLength; });
+                    return [2 /*return*/, filteredWords.slice(0, count)];
                 case 3:
                     error_1 = _a.sent();
                     console.error("Error fetching random words: ", error_1);
