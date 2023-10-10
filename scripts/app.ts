@@ -66,6 +66,7 @@ if (startBtn && typingArea) {
   typingArea.classList.remove('unfocused')
 
   startBtn.addEventListener('click', () => {
+    startBtn.blur()
     resetTimer()
   })
 

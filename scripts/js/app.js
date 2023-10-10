@@ -106,6 +106,7 @@ if (startBtn && typingArea) {
     typingArea.focus();
     typingArea.classList.remove('unfocused');
     startBtn.addEventListener('click', function () {
+        startBtn.blur();
         resetTimer();
     });
     var lockedPositions_1 = [];
