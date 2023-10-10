@@ -59,6 +59,15 @@ body {
   align-items: center;
   padding: 20px;
   border-radius: 5px;
+
+  .wpm-debug {
+    margin: 0 auto;
+    margin-top: 10rem;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #FFF;
+  }
 }
 
 .typing-container {

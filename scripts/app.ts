@@ -4,12 +4,17 @@ const typingArea: HTMLElement | null = document.querySelector('.typing-area')
 const startBtn: HTMLElement | null = document.querySelector('.start-btn')
 const countdownElement: HTMLElement | null = document.querySelector('.countdown')
 
+const wpmDisplay: HTMLElement | null = document.querySelector('#wpm-display')
+
 let currentPosition: number = 0
 let currentPrompt: string = ''
 let userInput: string[] = []
 
 let countdownTimer: number | null = null
 let countdownValue: number = 0
+
+let correctlyTypedWords: number = 0
+let activeTime: string = '15'
 
 async function loadNewPrompt() {
   try {
@@ -21,6 +26,15 @@ async function loadNewPrompt() {
     userInput = []
   } catch (error) {
     console.error('Error in loadNewPrompt:', error)
+  }
+}
+
+function updateWPM() {
+  const mintutesElapsed = (parseInt(activeTime) - countdownValue) / 60
+  const totalCharsTyped = userInput.join('').length
+  const wpm = ((totalCharsTyped / 5) / mintutesElapsed).toFixed(0)
+  if (wpmDisplay) {
+    wpmDisplay.textContent = wpm
   }
 }
 
@@ -143,6 +157,7 @@ if (startBtn && typingArea) {
 
      if (isWordCorrect(previousWordStart, previousWordEnd)) {
       console.log('Locking Previous Word Start: ', previousWordStart)
+      correctlyTypedWords++
       if (!lockedPositions.includes(previousWordStart)) {
         lockedPositions.push(previousWordStart)
       }
@@ -171,7 +186,7 @@ if (startBtn && typingArea) {
     setCursorAfterStyledChar(typingArea, currentPosition)
 
     if (!hasStartedTyping) {
-      const activeTime = document.querySelector('.time-selection.active')?.textContent || '15'
+      activeTime = document.querySelector('.time-selection.active')?.textContent || '15'
       countdownValue = parseInt(activeTime)
 
       if (countdownElement) {
@@ -198,6 +213,7 @@ if (startBtn && typingArea) {
       }, 1000)
 
       hasStartedTyping = true
+      setInterval(updateWPM, 1000)
     }
   })
 

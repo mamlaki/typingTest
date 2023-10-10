@@ -38,11 +38,14 @@ import { getRandomWords } from "./getRandomWords.js";
 var typingArea = document.querySelector('.typing-area');
 var startBtn = document.querySelector('.start-btn');
 var countdownElement = document.querySelector('.countdown');
+var wpmDisplay = document.querySelector('#wpm-display');
 var currentPosition = 0;
 var currentPrompt = '';
 var userInput = [];
 var countdownTimer = null;
 var countdownValue = 0;
+var correctlyTypedWords = 0;
+var activeTime = '15';
 function loadNewPrompt() {
     return __awaiter(this, void 0, void 0, function () {
         var words, error_1;
@@ -67,6 +70,14 @@ function loadNewPrompt() {
             }
         });
     });
+}
+function updateWPM() {
+    var mintutesElapsed = (parseInt(activeTime) - countdownValue) / 60;
+    var totalCharsTyped = userInput.join('').length;
+    var wpm = ((totalCharsTyped / 5) / mintutesElapsed).toFixed(0);
+    if (wpmDisplay) {
+        wpmDisplay.textContent = wpm;
+    }
 }
 function resetTimer() {
     var _a;
@@ -174,6 +185,7 @@ if (startBtn && typingArea) {
             }
             if (isWordCorrect(previousWordStart, previousWordEnd)) {
                 console.log('Locking Previous Word Start: ', previousWordStart);
+                correctlyTypedWords++;
                 if (!lockedPositions_1.includes(previousWordStart)) {
                     lockedPositions_1.push(previousWordStart);
                 }
@@ -202,7 +214,7 @@ if (startBtn && typingArea) {
         console.log("End Current Position: ".concat(currentPosition));
         setCursorAfterStyledChar(typingArea, currentPosition);
         if (!hasStartedTyping) {
-            var activeTime = ((_a = document.querySelector('.time-selection.active')) === null || _a === void 0 ? void 0 : _a.textContent) || '15';
+            activeTime = ((_a = document.querySelector('.time-selection.active')) === null || _a === void 0 ? void 0 : _a.textContent) || '15';
             countdownValue = parseInt(activeTime);
             if (countdownElement) {
                 countdownElement.textContent = countdownValue.toString();
@@ -225,6 +237,7 @@ if (startBtn && typingArea) {
                 }
             }, 1000);
             hasStartedTyping = true;
+            setInterval(updateWPM, 1000);
         }
     });
     typingArea.addEventListener('click', function (e) {
