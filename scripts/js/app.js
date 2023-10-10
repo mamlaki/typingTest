@@ -56,7 +56,6 @@ function loadNewPrompt() {
                     currentPrompt = words.join(' ');
                     typingArea.innerHTML = currentPrompt.split('').map(function (char) { return "<span>".concat(char, "</span>"); }).join('');
                     currentPosition = 0;
-                    setCursorAtStart(typingArea);
                     typingArea === null || typingArea === void 0 ? void 0 : typingArea.classList.remove('typing-in-progress');
                     userInput = [];
                     return [3 /*break*/, 3];

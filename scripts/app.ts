@@ -17,7 +17,6 @@ async function loadNewPrompt() {
     currentPrompt = words.join(' ')
     typingArea!.innerHTML = currentPrompt.split('').map(char => `<span>${char}</span>`).join('')
     currentPosition = 0
-    setCursorAtStart(typingArea!)
     typingArea?.classList.remove('typing-in-progress')
     userInput = []
   } catch (error) {

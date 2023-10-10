@@ -162,9 +162,7 @@ body {
 
 .typing-area {
   width: 100%;
-  min-height: 150px;
   outline: none;
-  filter: none;
   transition: filter 0.3s ease;
   transition-delay: 0.5s;
   position: relative;
@@ -178,18 +176,13 @@ body {
   .typing-area::before {
     content: '';
     position: absolute;
-    height: 7%;
-    width: 0;
-    top: 2px;
+    height: clamp(1.6rem, 2vw, 2.4rem);
     left: -2px;
     border-radius: 9px;
     background-color: rgba(255, 255, 255, 0.7);
     animation: caretBlink 1s infinite;
     transition: transform 0.1s ease-out;
-    transform: translateX(var(--cursor-translate-x, 0px)) translateY(var(--cursor-translate-y, 0px)); }
-  @media (max-width: 768px) {
-    .typing-area::before {
-      height: 7%; } }
+    transform: translateX(var(--cursor-translate-x, 0px)) translateY(var(--cursor-translate-y, 5px)); }
   .typing-area:not(.unfocused)::before {
     width: 2px; }
   .typing-area.typing-in-progress::before {
