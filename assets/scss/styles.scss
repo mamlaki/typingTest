@@ -185,7 +185,7 @@ body {
   text-align: justify;
   margin: 0 auto;
   margin-bottom: 2rem;
-  transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.3s ease-in-out, filter 0.3s ease-in-out;
 
   &.unfocused {
     filter: blur(3.5px);
