@@ -39,7 +39,19 @@ function resetTimer() {
 
   hasStartedTyping = false
   typingArea?.setAttribute('contenteditable', 'true')
-  loadNewPrompt()
+
+  if (typingArea) {
+    typingArea.style.opacity = '0'
+    setTimeout(() => {
+      loadNewPrompt().then(() => {
+        setTimeout(() => {
+          if (typingArea) {
+            typingArea.style.opacity = '1'
+          }
+        }, 5)
+      })
+    }, 5)
+  }
 }
 
 if (startBtn && typingArea) {

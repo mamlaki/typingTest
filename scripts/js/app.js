@@ -82,7 +82,18 @@ function resetTimer() {
     }
     hasStartedTyping = false;
     typingArea === null || typingArea === void 0 ? void 0 : typingArea.setAttribute('contenteditable', 'true');
-    loadNewPrompt();
+    if (typingArea) {
+        typingArea.style.opacity = '0';
+        setTimeout(function () {
+            loadNewPrompt().then(function () {
+                setTimeout(function () {
+                    if (typingArea) {
+                        typingArea.style.opacity = '1';
+                    }
+                }, 5);
+            });
+        }, 5);
+    }
 }
 if (startBtn && typingArea) {
     typingArea.classList.add('unfocused');

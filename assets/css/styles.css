@@ -154,7 +154,7 @@ body {
   padding: 10px 20px;
   border-radius: 5px;
   transition: opacity 0.3s ease, transform 0.3s ease;
-  transition-delay: 0.5s;
+  transition-delay: 1s;
   pointer-events: none;
   font-size: 1.6rem; }
   .focus-message i {
@@ -171,7 +171,8 @@ body {
   caret-color: transparent;
   text-align: justify;
   margin: 0 auto;
-  margin-bottom: 2rem; }
+  margin-bottom: 2rem;
+  transition: opacity 0.3s ease-in-out; }
   .typing-area.unfocused {
     filter: blur(3.5px); }
   .typing-area::before {
