@@ -60,6 +60,13 @@ if (startBtn && typingArea) {
 
     e.preventDefault()
 
+    if (e.key === 'Tab') {
+      e.preventDefault()
+      startBtn?.focus()
+      showUIElements()
+      return
+    }
+
     const getWordStartPosition = (pos: number) => {
       let tempPos = (pos - 1 < 0) ? 0 : pos - 1
       let startPos = currentPrompt.lastIndexOf(' ', tempPos) + 1

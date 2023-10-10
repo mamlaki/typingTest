@@ -98,6 +98,12 @@ if (startBtn && typingArea) {
         console.log("Key Pressed: ".concat(e.key));
         console.log("Initial Current Position: ".concat(currentPosition));
         e.preventDefault();
+        if (e.key === 'Tab') {
+            e.preventDefault();
+            startBtn === null || startBtn === void 0 ? void 0 : startBtn.focus();
+            showUIElements();
+            return;
+        }
         var getWordStartPosition = function (pos) {
             var tempPos = (pos - 1 < 0) ? 0 : pos - 1;
             var startPos = currentPrompt.lastIndexOf(' ', tempPos) + 1;
