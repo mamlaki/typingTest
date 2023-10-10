@@ -41,12 +41,17 @@ function resetTimer() {
   typingArea?.setAttribute('contenteditable', 'true')
 
   if (typingArea) {
+    typingArea.removeAttribute('contenteditable')
     typingArea.style.opacity = '0'
     setTimeout(() => {
       loadNewPrompt().then(() => {
         setTimeout(() => {
           if (typingArea) {
             typingArea.style.opacity = '1'
+            setTimeout(() => {
+              typingArea.setAttribute('contenteditable', 'true')
+              typingArea.focus()
+            }, 200)
           }
         }, 5)
       })

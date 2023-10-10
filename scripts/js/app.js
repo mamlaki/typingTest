@@ -83,12 +83,17 @@ function resetTimer() {
     hasStartedTyping = false;
     typingArea === null || typingArea === void 0 ? void 0 : typingArea.setAttribute('contenteditable', 'true');
     if (typingArea) {
+        typingArea.removeAttribute('contenteditable');
         typingArea.style.opacity = '0';
         setTimeout(function () {
             loadNewPrompt().then(function () {
                 setTimeout(function () {
                     if (typingArea) {
                         typingArea.style.opacity = '1';
+                        setTimeout(function () {
+                            typingArea.setAttribute('contenteditable', 'true');
+                            typingArea.focus();
+                        }, 200);
                     }
                 }, 5);
             });
